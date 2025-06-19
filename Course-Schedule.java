@@ -1,6 +1,7 @@
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        return !isCyclic(numCourses,prerequisites);
+        return !isCyclic(numCourses,prerequisites);// it means cycle detected then we are not able to do the course
+        // so it return false
     }
      public boolean isCyclic(int V, int[][] edges) {
         ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
