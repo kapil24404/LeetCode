@@ -1,24 +1,44 @@
 class Solution {
     public int rob(int[] nums) {
-        int n=nums.length;
-         if (n == 0) return 0;
+        int n = nums.length;
+        
+        if (n == 0) return 0;
         if (n == 1) return nums[0];
-        int max1 = robDP(nums, 0, n - 2);
-        int max2 = robDP(nums, 1, n - 1);
-        return Math.max(max1, max2);
-    }
-    public int robDP(int nums[],int start,int end){
-         int len = end - start + 1;
-        if (len == 0) return 0;
-        if (len == 1) return nums[start];
-        int dp[]=new int[len];
-        dp[0] = nums[start];
-        dp[1] = Math.max(nums[start], nums[start + 1]);
-
-        for (int i = 2; i < len; i++) {
-            dp[i] = Math.max(dp[i - 1], dp[i - 2] + nums[start + i]);
+        
+        // Two cases: 
+        // 1. Exclude the last house (rob houses from 0 to n-2)
+        // 2. Exclude the first house (rob houses from 1 to n-1)
+        
+        // Case 1: Rob from 0 to n-2
+        int[] dp1 = new int[n];
+        for (int i = 0; i < n; i++) {  // Initialize dp1 with -1
+            dp1[i] = -1;
         }
+        int ans1 = maxprofit(nums, n-2, dp1, 0);
+        
+        // Case 2: Rob from 1 to n-1
+        int[] dp2 = new int[n];
+        for (int i = 0; i < n; i++) {  // Initialize dp2 with -1
+            dp2[i] = -1;
+        }
+        int ans2 = maxprofit(nums, n-1, dp2, 1);
+        
+        // Return the maximum of both cases
+        return Math.max(ans1, ans2);
+    }
 
-        return dp[len - 1];
+    public int maxprofit(int nums[], int n, int dp[], int start) {
+        if (n < start) return 0;
+        
+        if (dp[n] != -1) return dp[n];  // Check if already computed
+        
+        if (n == start) {
+            dp[n] = nums[start];
+        } else {
+            dp[n] = Math.max(nums[n] + maxprofit(nums, n-2, dp, start), 
+                             maxprofit(nums, n-1, dp, start));
+        }
+        
+        return dp[n];
     }
 }
