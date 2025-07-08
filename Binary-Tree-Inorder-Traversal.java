@@ -15,15 +15,33 @@
  */
 class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
-        List<Integer> ans=new ArrayList<>();
-        if(root==null) return ans;
-           inorder(root,ans);
+        List<Integer> ans = new ArrayList<>();
+        TreeNode curr = root;
+        
+        while (curr != null) {
+            if (curr.left == null) {
+                ans.add(curr.val);
+                curr = curr.right;
+            } else {
+                TreeNode pre = curr.left;
+                // Find rightmost node in left subtree or thread
+                while (pre.right != null && pre.right != curr) {
+                    pre = pre.right;
+                }
+
+                if (pre.right == null) {
+                    // Make a thread
+                    pre.right = curr;
+                    curr = curr.left;
+                } else {
+                    // Revert thread and visit node
+                    pre.right = null;
+                    ans.add(curr.val);
+                    curr = curr.right;
+                }
+            }
+        }
+
         return ans;
-    }
-    public static void inorder(TreeNode root,List<Integer> ans){
-         if (root == null) return;
-         inorder(root.left,ans);
-         ans.add(root.val);
-         inorder(root.right,ans);
     }
 }
