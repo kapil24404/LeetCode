@@ -25,5 +25,6 @@ class Solution {
         ans.add(root.val);
         preorder(root.left,ans);
         preorder(root.right,ans);
+    
     }
 }
