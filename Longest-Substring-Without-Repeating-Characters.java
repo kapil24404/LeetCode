@@ -7,11 +7,10 @@ class Solution {
         for(int right=0;right<n;right++){
             char ch=s.charAt(right);
             if(hm.containsKey(ch)){
-                left = Math.max(left, hm.get(ch) + 1);
-                
+                left = Math.max(left, hm.get(ch) + 1);  
             }
             hm.put(ch,right);
-                maxlen=Math.max(maxlen,right-left+1);
+            maxlen=Math.max(maxlen,right-left+1);
         }
         return maxlen;
     }
