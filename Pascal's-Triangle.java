@@ -12,7 +12,7 @@ class Solution {
                     ans.add(val);
                 }
              }
-             res.add(ans);
+            res.add(ans);
         }
         return res;
     }
